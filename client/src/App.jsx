@@ -28,7 +28,6 @@ function App() {
         <Route path='/movies/:id/:date' element={<SeatLayout></SeatLayout>}></Route>
         <Route path='/my-bookings' element={<MyBooking></MyBooking>}></Route>
         <Route path='/favorite' element={<Favorite></Favorite>}></Route>
-        <Route path='/movies/:id/:date' element={<SeatLayout></SeatLayout>}></Route>
 
       </Routes>
       {!isAdminRoute && <Footer></Footer>}
