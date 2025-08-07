@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { dummyDateTimeData, dummyShowsData } from '../assets/assets'
 import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react'
 import DateSelect from '../components/DateSelect'
+import Loading from '../components/Loading'
 
 const MovieDetails = () => {
 
@@ -11,11 +12,13 @@ const MovieDetails = () => {
 
     const getShow = async () => {
         const show = dummyShowsData.find(show => show._id === id)
+        if (show) {
+            setShow({
+                movie: show,
+                dateTime: dummyDateTimeData,
+            })
+        }
 
-        setShow({
-            movie: show,
-            dateTime: dummyDateTimeData,
-        })
     }
 
     useEffect(() => {
@@ -64,7 +67,7 @@ cursor-pointer active: scale-95'>
                 id={id}></DateSelect>
 
         </div>
-    ) : <div>Loading...</div>
+    ) : <Loading></Loading>
 }
 
 export default MovieDetails
