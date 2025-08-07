@@ -11,7 +11,7 @@ const MovieCard = ({ movie }) => {
     hover:-translate-y-1 transition duration-300 w-66'>
 
             <img onClick={() => {
-                navigate(`movies/${movie._id}`); scrollTo(0, 0)
+                navigate(`/movies/${movie._id}`); scrollTo(0, 0)
             }}
                 src={movie.backdrop_path} alt="" className='rounded-lg h-52 w-full 
     object-cover object-right-bottom cursor-pointer'/>
@@ -23,7 +23,7 @@ const MovieCard = ({ movie }) => {
                     (genre => genre.name).join(" | ")} . {movie.runtime}
             </p>
             <div className='flex items-center justify-between mt-4 pb-3'>
-                <button onClick={() => { navigate('/movies/${movie ._ id}'); scrollTo(0, 0) }}
+                <button onClick={() => { navigate('/movies/${movie._id}'); scrollTo(0, 0) }}
                     className='px-4 py-2 text-xs bg-primary hover:bg-primary-dull transition
 rounded-full font-medium cursor-pointer'>Buy Tickets</button>
 
@@ -32,9 +32,6 @@ rounded-full font-medium cursor-pointer'>Buy Tickets</button>
                     {movie.vote_average.toFixed(1)}
                 </p>
             </div>
-
-
-
 
         </div>
     )
