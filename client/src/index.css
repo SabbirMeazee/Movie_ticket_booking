@@ -21,3 +21,7 @@ body {
 .no-scrollbar {
   scrollbar-width: none;
 }
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
