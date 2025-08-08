@@ -3,23 +3,37 @@ import { dummyBookingData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import Title from './Title';
 import { dateFormat } from '../../lib/dateFormat';
+import { useAppContext } from '../../context/AppContext';
 
 const ListBookings = () => {
     const currency = import.meta.env.VITE_CURRENCY
+    const { axios, getToken, user, image_bage_url } = useAppContext()
 
     const [bookings, setBookings] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const getAllBookings = async () => {
-        setBookings(dummyBookingData)
-        setIsLoading(false);
 
-    };
+
+    const getAllBookings = async () => {
+        try {
+            const { data } = await axios.get("/api/admin/all-bookings", {
+                headers: { Authorization: `Bearer ${await getToken()}` }
+            })
+            setBookings(data.bookings)
+        } catch (error) {
+            console.errod(error);
+        }
+        setIsLoading(false)
+
+    }
+
 
     useEffect(() => {
-        getAllBookings();
+        if (user) {
+            getAllBookings();
+        }
 
-    }, []);
+    }, [user]);
 
     return !isLoading ? (
         <>
@@ -42,9 +56,7 @@ text-nowrap">
                             <tr key={index} className="border-b border-primary/20 bg-primary/5 even:bg-primary/10">
                                 <td className="p-2 min-w-45 pl-5">{item.user.name}</td>
                                 <td className="p-2">{item.show.movie.title}</td>
-                                <td className="p-2">{dateFormat(item.show.showDateTime)}</
-                                td>
-                                <td className="p-2">{Object.keys(item.bookedSeats).map(seat => item.bookedSeats[seat]).join(", ")}</td>
+                                <td className="p-2">{dateFormat(item.show.showDateTime)}</td>
                                 <td className="p-2">{currency} {item.amount}</td>
                             </tr>
                         ))}

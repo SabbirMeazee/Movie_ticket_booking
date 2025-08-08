@@ -4,6 +4,8 @@ import Loading from '../components/Loading'
 import { dummyShowsData, dummyDateTimeData } from '../assets/assets'
 import { ArrowRightIcon, ClockIcon } from 'lucide-react'
 import iosTimeFormat from '../lib/iosTimeFormat'
+import { useAppContext } from '../context/AppContext'
+import toast from 'react-hot-toast'
 
 const SeatLayout = () => {
 
@@ -12,19 +14,54 @@ const SeatLayout = () => {
     const [selectedTime, setSelectedTime] = useState(null)
     const [show, setShow] = useState(null)
     const navigate = useNavigate()
-    const getShow = async () => {
-        const show = dummyShowsData.find(show => show._id === id)
-        if (show) {
-            setShow({
-                movie: show,
-                dateTime: dummyDateTimeData
 
-            })
+    const { axios, getToken, user, image_bage_url } = useAppContext()
+
+
+    const getShow = async () => {
+        try {
+            const { data } = await axios.get(`/api/show/${id}`)
+            if (data.success) {
+                setShow(data)
+
+            }
+        } catch (error) {
+            console.log(error)
+
         }
     }
+
+
+
+
+    const bookTickets = async () => {
+        try {
+            if (!user) return toast.error('Please login to proceed')
+
+            if (!selectedTime) return toast.error('Please select a time and seats');
+
+            const { data } = await axios.post('/api/booking/create', {
+                showId:
+                    selectedTime.showId
+            }, { headers: { Authorization: `Bearer ${await getToken()}` } });
+
+            if (data.success) {
+                toast.success(data.message)
+                navigate('/my-bookings')
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+
+
+        }
+    }
+
     useEffect(() => {
         getShow()
     }, [])
+
 
     return show ? (
         <div className='flex flex-col justify-center md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50' >
@@ -47,7 +84,7 @@ const SeatLayout = () => {
                 <h1 className='text-2x1 font-semibold mb-4'>Select your seat</h1>
             </div> */}
             <div>
-                <button onClick={() => navigate('/my-bookings')} className='ml-6 flex items-center gap-1 mt-20  px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer active:scale-95'>
+                <button onClick={bookTickets} className='ml-6 flex items-center gap-1 mt-20  px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer active:scale-95'>
                     Proceed to Checkout
                     <ArrowRightIcon strokeWidth={3} className="w-4 h-4" />
                 </button>

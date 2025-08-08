@@ -3,10 +3,12 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import MovieCard from './MovieCard'
 import { dummyShowsData } from '../assets/assets'
+import { useAppContext } from '../context/AppContext'
 
 function FeaturedSection() {
 
     const navigate = useNavigate()
+    const { shows } = useAppContext()
     return (
         <div className='px-6 md:px-16 1g:px-24 x1:px-44 overflow-hidden'>
 
