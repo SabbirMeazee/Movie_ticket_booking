@@ -3,7 +3,6 @@ import User from "../model/User.js";
 
 export const inngest = new Inngest({ id: "movie-ticket-booking" });
 
-//Inngest function to save  user data to a database
 
 const syncUserCreation = inngest.createFunction(
     { id: 'sync-user-from-clerk' },
