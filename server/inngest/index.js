@@ -28,7 +28,6 @@ const syncUserDeletion = inngest.createFunction(
         await User.findByIdAndDelete(id)
     }
 )
-// upadate data of user
 const syncUserUpdation = inngest.createFunction(
     { id: 'update-user-from-clerk' },
     { event: 'clerk/user.updated' },
