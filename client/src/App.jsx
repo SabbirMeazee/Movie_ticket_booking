@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
@@ -14,10 +14,14 @@ import Dashboard from './pages/admin/Dashboard'
 import Addshows from './pages/admin/Addshows'
 import ListShows from './pages/admin/ListShows'
 import ListBookings from './pages/admin/ListBookings'
+import { useAppContext } from './context/AppContext'
+import { SignIn } from '@clerk/clerk-react'
 
 function App() {
 
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
+
+  const { user } = useAppContext()
 
   return (
     <>
@@ -33,7 +37,13 @@ function App() {
         <Route path='/movies/:id/:date' element={<SeatLayout></SeatLayout>}></Route>
         <Route path='/my-bookings' element={<MyBooking></MyBooking>}></Route>
         <Route path='/favorite' element={<Favorite></Favorite>}></Route>
-        <Route path='/admin/*' element={<Layout />}>
+
+        <Route path='/admin/*' element={user ? <Layout /> : (
+          <div className='min-h-screen flex justify-center items'>
+            <SignIn fallbackRedirectUrl={'/admin'}></SignIn>
+          </div>
+        )}>
+
           <Route index element={<Dashboard></Dashboard>}></Route>
           <Route path='add-shows' element={<Addshows></Addshows>}></Route>
           <Route path='list-shows' element={<ListShows></ListShows>}></Route>
