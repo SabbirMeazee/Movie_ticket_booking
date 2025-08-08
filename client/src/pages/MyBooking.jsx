@@ -20,7 +20,7 @@ const MyBooking = () => {
     }, [])
 
     return !isLoading ? (
-        <div >
+        <div className='relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]'>
             <h1 className='text-lg font-semibold mb-4'>My Bookings</h1>
 
             {bookings.map((item, index) => (
