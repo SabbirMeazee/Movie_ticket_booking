@@ -14,6 +14,7 @@ export const assets = {
     profile
 }
 
+
 export const dummyTrailers = [
     {
         image: "https://img.youtube.com/vi/WpW36ldAqnM/maxresdefault.jpg",
@@ -32,6 +33,10 @@ export const dummyTrailers = [
         videoUrl: 'https://www.youtube.com/watch?v=umiKiW4En9g'
     },
 ]
+
+
+
+
 
 const dummyCastsData = [
     { "name": "Milla Jovovich", "profile_path": "https://image.tmdb.org/t/p/original/usWnHCzbADijULREZYSJ0qfM00y.jpg", },
