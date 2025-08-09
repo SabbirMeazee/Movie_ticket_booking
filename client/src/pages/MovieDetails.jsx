@@ -70,4 +70,6 @@ cursor-pointer active: scale-95'>
     ) : <Loading></Loading>
 }
 
+
+
 export default MovieDetails

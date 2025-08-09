@@ -52,4 +52,5 @@ text-sm rounded-full font-medium cursor-pointer'>Pay Now</button>}
     )
 }
 
+
 export default MyBooking
